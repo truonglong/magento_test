@@ -1,0 +1,159 @@
+<?php $_helper = $this->helper('catalog/output'); ?>
+<?php $_prod = $this->getProduct(); ?>
+<?php
+    $model = Mage::getModel('catalog/product');
+    $product_id = $_prod->getId();
+    $product = $model->load($product_id);
+
+    // Get all related product ids of $product.
+    $_productCollection = $product->getRelatedProductIds();
+
+?>
+
+<div id="content">
+    <div id="main" class="container">
+        <div id="choose-juice">
+            <div class="choose-top">
+                <h2>CHOOSE YOUR JUICES</h2>
+                <div class="banner"><p class="bnr-product chosen_0"></p></div>
+            </div> <!-- choose-top -->
+            <form action="<?php echo $this->getSubmitUrl($_prod) ?>" method="post" id="product_addtocart_form"<?php if($_prod->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+
+            <ul class="list-menu cf">
+                <?php foreach($_productCollection as $_pro):$_product = $model->load($_pro);?>
+                <li>
+                    <a href="<?php echo $_product->getProductUrl()?>" class="over4">
+                        <img src="<?php echo $_product->getImageUrl();?>" alt="" class="product">
+                        <span class="name"><?php echo $_product->getName()?></span>
+                    </a>
+                    <div class="discrition">
+                        <?php $function_product = $_product->getAttributeText('function_product'); ?>
+                        <ul class="utility cf">
+                            <?php
+                            foreach($function_product as $fd) {
+                                switch ($fd) {
+                                    case "antioxidantshot":
+                                        echo "<li class='musclepower'>MUSCLE POWER</li>";
+                                        break;
+                                    case "beautyanti-aging":
+                                        echo "<li class='beautyanti-aging'>BEAUTY</li>";
+                                        break;
+                                    case "detoxflush":
+                                        echo "<li class='detoxflush'>DETOXFLUSH</li>";
+                                        break;
+                                    case "enerybooster":
+                                        echo "<li class='enerybooster'>ENERRY BOOSTER</li>";
+                                        break;
+                                    case "hearthealth":
+                                        echo "<li class='hearthealth'>HEARTHEALTH</li>";
+                                        break;
+                                    case "musclepower":
+                                        echo "<li class='musclepower'>MUSCLE POWER</li>";
+                                        break;
+                                    default:
+                                        0;
+                                }
+                            }
+                            ?>
+                        </ul> <!-- utility -->
+                        <p class="constituent"><?php echo $_product->getShortDescription();?></p>
+                        <div class="quantity cf">
+<!--                            --><?php //if(!$_product->isGrouped()): ?>
+                            <input type="text" name="qty_temp" id="qty_temp" value="0" />
+                            <input type="text" name="qty" id="qty" maxlength="12" value="1" style="display: none;">
+<!--                                <label for="qty">--><?php //echo $this->__('Qty') ?><!--:</label>-->
+<!--                            --><?php //endif; ?>
+                            <p class="box-count">
+                                <a href="#" class="ar-count ar-up_custom">Up</a>
+                                <a href="#" class="ar-count ar-down_custom">Down</a>
+                            </p> <!-- box-count -->
+                        </div> <!-- quanlity -->
+                        <p class="benifit">DETOX &amp; FLUSH</p>
+                    </div> <!-- discrition -->
+                </li>
+                <?php endforeach;?>
+            </ul><!-- list-menu -->
+
+            <div class="box-link">
+                <button title="<?php echo $this->__('Add to Cart') ?>" class="btn-order over4"><?php echo $this->__('Order') ?></button>
+<!--                --><?php //echo $this->getChildHtml('addtocart')?>
+            </div>
+            </form>
+            <script type="text/javascript">
+                //<![CDATA[
+                function getTotalQty() {
+                    var totalQty = 0;
+                    $('input[name="qty_temp"]').each(function() {
+                        totalQty += parseInt($(this).val());
+                    });
+                    return totalQty;
+                }
+
+                alert(getTotalQty());
+                var productAddToCartForm = new VarienForm('product_addtocart_form');
+                productAddToCartForm.submit = function(button, url) {
+                    alert("jfljdfkjsld");
+                    if (this.validator.validate()) {
+                        var form = this.form;
+                        var oldUrl = form.action;
+
+                        if (url) {
+                            form.action = url;
+                        }
+                        var e = null;
+                        try {
+                            this.form.submit();
+                        } catch (e) {
+                        }
+                        this.form.action = oldUrl;
+                        if (e) {
+                            throw e;
+                        }
+
+                        if (button && button != 'undefined') {
+                            button.disabled = true;
+                        }
+                    }
+                }.bind(productAddToCartForm);
+
+                productAddToCartForm.submitLight = function(button, url){
+                    if(this.validator) {
+                        var nv = Validation.methods;
+                        delete Validation.methods['required-entry'];
+                        delete Validation.methods['validate-one-required'];
+                        delete Validation.methods['validate-one-required-by-name'];
+                        // Remove custom datetime validators
+                        for (var methodName in Validation.methods) {
+                            if (methodName.match(/^validate-datetime-.*/i)) {
+                                delete Validation.methods[methodName];
+                            }
+                        }
+
+                        if (this.validator.validate()) {
+                            if (url) {
+                                this.form.action = url;
+                            }
+                            this.form.submit();
+                        }
+                        Object.extend(Validation.methods, nv);
+                    }
+                }.bind(productAddToCartForm);
+                //]]>
+            </script>
+        </div><!-- choose-juice -->
+<!--        <div class="group-controll cf">-->
+<!--            <ul class="box-view cf">-->
+<!--                <li><a href="#">VIEW 10</a> | </li>-->
+<!--                <li><a href="#">VIEW ALL</a></li>-->
+<!--            </ul> <!-- box-view -->
+<!--            <div class="box-paging">-->
+<!--                <div class="inner-paging cf">-->
+<!--                    <p>Page</p>-->
+<!--                    <div class="pagination-holder">-->
+<!--                        <div class="pagination pagi-review"></div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div> <!-- box-paging -->
+<!--        </div> <!-- group-control -->
+    </div>
+</div>

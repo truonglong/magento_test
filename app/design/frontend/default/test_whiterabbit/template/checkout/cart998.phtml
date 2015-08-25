@@ -1,0 +1,170 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Shopping cart template
+ *
+ * @see Mage_Checkout_Block_Cart
+ */
+?>
+<?php
+    $cart = Mage::getModel('checkout/cart')->getQuote();
+
+    foreach ($cart->getAllItems() as $item) {
+        $values = unserialize($item->getOptionByCode('info_buyRequest')->getValue());
+        $parentId = $values['super_product_config']['product_id'];
+    }
+?>
+<div id="content">
+    <div id="main" class="container">
+        <div id="cart-content">
+            <h2>THANK YOU FOR SHOPPING WITH US</h2>
+            <h3>CART</h3>
+            <table class="tbl-cart">
+                <thead>
+                <tr>
+                    <th colspan="2">ITEM</th>
+                    <th>DELIVERY DATE</th>
+                    <th>QUANTITY</th>
+                    <th>PRICE</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach($cart->getAllItems() as $item) {?>
+                    <tr>
+                        <td class="col01"><img src="img/cart/photo_01.png" alt=""></td>
+                        <td class="col02">
+                            <div class="box-detail">
+                                <h4>CUSTOMIZED <br>6 PACK <br>—</h4>
+                                <p>JUICE 1 <br>JUICE 2 <br>JUICE 3 <br>JUICE 4 x2</p>
+                                <ul class="cart-controll">
+                                    <li><a href="#" class="over4">DELETE</a>  |  </li>
+                                    <li><a href="#" class="over4">SAVE FOR LATER</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td class="col03">
+                            <input type="text" class="datepicker" placeholder="2015/06/09" autocomplete="off">
+                        </td>
+                        <td class="col04"><input type="number" name="quanlity" min="1" max="10" value="0"></td>
+                        <td class="col05">$90.00</td>
+                    </tr>
+                <?php}?>
+                </tbody>
+            </table> <!-- tbl-cart -->
+            <div class="cf">
+                <div class="box-checkout">
+                    <form action="">
+                        <div class="box-apply">
+                            <span>PROMO CODE (IF ANY)</span>
+                            <input type="text" name="code">
+                            <input type="button" name="apply" value="apply" class="over4">
+                        </div> <!-- box-apply -->
+                        <div class="list-checkout">
+                            <p class="subtotal cf">
+                                <span class="name">SUBTOTAL</span>
+                                <span class="price">$470.00</span>
+                            </p>
+                            <p class="shipping cf">
+                                <span class="name">SHIPPING</span>
+                                <span class="price">$7.00</span>
+                            </p>
+                            <p class="total cf">
+                                <span class="name">TOTAL</span>
+                                <span class="price">$477.00</span>
+                            </p>
+                            <p class="cf">
+                                <input type="submit" name="checkout" value="checkout" class="over4">
+                            </p>
+                        </div> <!-- list-checkout -->
+                    </form>
+                </div> <!-- box-checkout -->
+            </div>
+            <h3>SAVE ITEMS</h3>
+            <table class="tbl-cart">
+                <thead>
+                <tr>
+                    <th colspan="2">ITEM</th>
+                    <th>DELIVERY DATE</th>
+                    <th>QUANTITY</th>
+                    <th>PRICE</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="col01"><img src="img/cart/photo_01.png" alt=""></td>
+                    <td class="col02">
+                        <div class="box-detail">
+                            <h4>CUSTOMIZED <br>6 PACK <br>—</h4>
+                            <p>JUICE 1 <br>JUICE 2 <br>JUICE 3 <br>JUICE 4 x2</p>
+                            <ul class="cart-controll">
+                                <li><a href="#" class="over4">DELETE</a>  |  </li>
+                                <li><a href="#" class="over4">SAVE FOR LATER</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="col03"><input type="text" class="datepicker" placeholder="2015/06/09" autocomplete="off"></td>
+                    <td class="col04"><input type="number" name="quanlity" min="1" max="10" value="0"></td>
+                    <td class="col05">$90.00</td>
+                </tr>
+                <tr>
+                    <td><img src="img/cart/photo_01.png" alt=""></td>
+                    <td>
+                        <div class="box-detail">
+                            <h4>FIXED <br>6 PACK <br>—</h4>
+                            <p>JUICE 1 x2 <br>JUICE 2 x2 <br>JUICE 3 <br>JUICE 4 x2</p>
+                            <ul class="cart-controll cf">
+                                <li><a href="#" class="over4">DELETE</a>  |  </li>
+                                <li><a href="#" class="over4">SAVE FOR LATER</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td><input type="text" class="datepicker" placeholder="2015/06/09" autocomplete="off"></td>
+                    <td><input type="number" name="quanlity" min="1" max="10" value="0"></td>
+                    <td>$90.00</td>
+                </tr>
+                <tr>
+                    <td><img src="img/cart/photo_01.png" alt=""></td>
+                    <td>
+                        <div class="box-detail">
+                            <h4>CLEANSE 1 <br>3-DAY <br>—</h4>
+                            <p>JUICE 1 <br>JUICE 2 <br>JUICE 3 <br>JUICE 4 <br>JUICE 5 <br>JUICE 6</p>
+                            <ul class="cart-controll">
+                                <li><a href="#" class="over4">DELETE</a>  |  </li>
+                                <li><a href="#" class="over4">SAVE FOR LATER</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td><input type="text" class="datepicker" placeholder="2015/06/09" autocomplete="off"></td>
+                    <td><input type="number" name="quanlity" min="1" max="10" value="0"></td>
+                    <td>$90.00</td>
+                </tr>
+                </tbody>
+            </table> <!-- tbl-cart -->
+        </div> <!-- cart-content -->
+    </div> <!-- main -->
+</div> <!-- content -->

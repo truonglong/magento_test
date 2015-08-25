@@ -1,0 +1,108 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Grouped product data template
+ *
+ * @see Mage_Catalog_Block_Product_View_Media
+ * @see Mage_Catalog_Block_Product_View_Type_Grouped
+ */
+?>
+<?php $this->setPreconfiguredValue(); ?>
+<?php $_product = $this->getProduct(); ?>
+<?php $_associatedProducts = $this->getAssociatedProducts(); ?>
+<?php $_hasAssociatedProducts = count($_associatedProducts) > 0; ?>
+<?php //echo $this->getChildHtml('product_type_data_extra') ?>
+<div id="content">
+    <div id="main" class="container">
+        <div id="choose-juice">
+            <div class="choose-top">
+                <h2>CHOOSE YOUR JUICES</h2>
+                <div class="banner"><p class="bnr-product chosen_0"></p></div>
+            </div> <!-- choose-top -->
+
+            <ul class="list-menu cf">
+                <?php if ($_hasAssociatedProducts):?>
+
+                <?php foreach($_associatedProducts as $_pro):?>
+                        <?php if ($_pro->isAvailable()):?>
+                    <li>
+                        <a href="<?php echo $_pro->getProductUrl()?>" class="over4">
+                            <img src="<?php echo $_pro->getImageUrl();?>" alt="" class="product">
+                            <span class="name"><?php echo $_pro->getName()?></span>
+                        </a>
+                        <div class="discrition">
+                            <?php $function_product = $_pro->getAttributeText('function_product'); ?>
+                            <ul class="utility cf">
+                                <?php
+                                foreach($function_product as $fd) {
+                                    switch ($fd) {
+                                        case "antioxidantshot":
+                                            echo "<li class='musclepower'>MUSCLE POWER</li>";
+                                            break;
+                                        case "beautyanti-aging":
+                                            echo "<li class='beautyanti-aging'>BEAUTY</li>";
+                                            break;
+                                        case "detoxflush":
+                                            echo "<li class='detoxflush'>DETOXFLUSH</li>";
+                                            break;
+                                        case "enerybooster":
+                                            echo "<li class='enerybooster'>ENERRY BOOSTER</li>";
+                                            break;
+                                        case "hearthealth":
+                                            echo "<li class='hearthealth'>HEARTHEALTH</li>";
+                                            break;
+                                        case "musclepower":
+                                            echo "<li class='musclepower'>MUSCLE POWER</li>";
+                                            break;
+                                        default:
+                                            0;
+                                    }
+                                }
+                                ?>
+                            </ul> <!-- utility -->
+                            <p class="constituent"><?php echo $_pro->getShortDescription();?></p>
+                            <div class="quantity cf">
+                                <input type="text" id="qty_temp" class="qty_temp" name="super_group[<?php echo $_pro->getId() ?>]" maxlength="6" value="<?php echo $_pro->getQty()*1 ?>" title="<?php echo $this->__('Qty') ?>"/>
+
+                                <p class="box-count">
+                                    <a href="#" class="ar-count ar-up_custom">Up</a>
+                                    <a href="#" class="ar-count ar-down_custom">Down</a>
+                                </p> <!-- box-count -->
+                            </div> <!-- quanlity -->
+                            <p class="benifit">DETOX &amp; FLUSH</p>
+                        </div> <!-- discrition -->
+                    </li>
+                        <?php endif;?>
+                <?php endforeach;?>
+                <?php endif;?>
+            </ul><!-- list-menu -->
+            <div class="box-link">
+                <button title="<?php echo $this->__('Add to Cart') ?>" class="btn-order over4 btn_custom" onclick="return productAddToCartForm.submit(this)"><?php echo $this->__('Order') ?></button>
+            </div>
+        </div>
+    </div>
+</div>
